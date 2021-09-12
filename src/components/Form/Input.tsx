@@ -1,14 +1,18 @@
-import { Input as ChakraInput, FormLabel, FormControl, InputProps as ChakraInputProps } from '@chakra-ui/react'
+import { forwardRef, ForwardRefRenderFunction } from 'react'
+import { FieldError } from 'react-hook-form'
+import { Input as ChakraInput, FormLabel, FormControl, InputProps as ChakraInputProps, FormErrorMessage } from '@chakra-ui/react'
 
 type InputProps = {
   name: string;
   label?: string;
+  error?: FieldError
 } & ChakraInputProps
 
-const Input = ({ name, label, ...rest }: InputProps) => {
+const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = ({ name, label, error = null, ...rest }, ref) => {
   return (
-    <FormControl>
+    <FormControl isInvalid={!!error}>
       {!!label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+
       <ChakraInput 
         id={name} 
         name={name} 
@@ -16,10 +20,18 @@ const Input = ({ name, label, ...rest }: InputProps) => {
         bgColor="gray.900" 
         variant="filled" 
         _hover={{ bgColor: 'gray.900' }} 
-        size="lg" {...rest} 
+        size="lg"
+        ref={ref}
+        {...rest} 
       />
+
+      { !!error && (
+        <FormErrorMessage>
+          {error.message}
+        </FormErrorMessage>
+      )}
     </FormControl>
   )
 }
 
-export default Input
+export default forwardRef(Input)
