@@ -42,6 +42,6 @@ export const getUsers = async (page: number): Promise<GetUsersResponse> => {
 
 export const useUsers = (page: number) => {
   return useQuery(['users', page], () => getUsers(page), {
-    staleTime: 1000 * 5, // The data will remain fresh for 5 seconds. Which means, if you change screen and go back within 5 seconds, react query will not get new data
+    staleTime: 1000 * 60 * 10, // The data will remain fresh for 10 minutes. Which means, if you change screen and go back within 10 minutes, react query will not get new data
   })
 }
