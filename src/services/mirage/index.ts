@@ -51,6 +51,7 @@ export function makeServer() {
           { users }
         )
       });
+      this.get('/users/:id');
       this.post('/users');
 
       // This is used to not mess with the same namespace used by nextjs. Since nextjs also has an api
