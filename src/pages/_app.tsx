@@ -8,7 +8,9 @@ import { theme } from '../styles/theme'
 import { makeServer } from 'services/mirage'
 import { queryClient } from 'services/queryClient'
 
-if (process.env.NODE_ENV === 'development') {
+const isDevelopment = process.env.NODE_ENV === 'development'
+
+if (isDevelopment) {
   makeServer();
 }
 
@@ -21,7 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         </SidebarDrawerProvider>
       </ChakraProvider>
 
-      <ReactQueryDevtools />
+      {isDevelopment && <ReactQueryDevtools />}
     </QueryClientProvider>
   )
 }
